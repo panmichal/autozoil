@@ -197,7 +197,7 @@ sub filtre_version {
     my $language = $self->{'language'};
 
     my $ver_words_regex = join('|', @{$VERSION_WORDS{$language}});
-    $text =~ s{ (($ver_words_regex | [A-Z]{2,} | width) (~|[\s\n]+) \d+ \. \d+) }{ replace_with_blanks($1) }egx;
+    $text =~ s{ (((?i:$ver_words_regex) | [A-Z]{2,} | width) (~|[\s\n]+) \d+ \. \d+) }{ replace_with_blanks($1) }egx;
 
     return $text;
 }
