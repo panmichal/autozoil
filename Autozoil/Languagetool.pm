@@ -18,6 +18,7 @@ END_OF_UNWANTED_ERRORS
 
 my %unwanted_skrotowce_bez_dywizu = map { $_ => 1 } split/\n/,<<'END_OF_UNWANTED_SKROTOWCE_BEZ_DYWIZU';
 PDFB-ox
+SQL-ite
 END_OF_UNWANTED_SKROTOWCE_BEZ_DYWIZU
 
 sub new {
