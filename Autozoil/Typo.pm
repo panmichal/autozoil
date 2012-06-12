@@ -18,7 +18,7 @@ my %VAR_WORDS = (
 );
 
 my %VERSION_WORDS = (
-    'pl' => ['wersja','wersji','wersję','wersją','wersje','wersjami','wersjach','wersjom',
+    'pl' => ['wersja','wersji','wersję','wersją','wersje','wersjami','wersjach','wersjom','numerem',
              'v.', 'ver.', 'Web'],
     'en' => ['version','v.','ver.','Web'],
 );
@@ -211,5 +211,3 @@ sub filtre_text {
 }
 
 1;
-
-
