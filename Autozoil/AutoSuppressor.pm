@@ -42,8 +42,9 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
-    if ($mistake->{'label'} eq 'WORD_REPEAT_RULE'
-        && $mistake->{'original_line'}
+    if (($mistake->{'label'} eq 'WORD_REPEAT_RULE'
+         || $mistake->{'label'} eq 'PL_DWA_WYRAZY')
+         && $mistake->{'original_line'}
             =~ m{\\(chapter|section|subsection|subsubsection)\{.*\}}) {
 
         $mistake->{'unwanted'} = 1;
