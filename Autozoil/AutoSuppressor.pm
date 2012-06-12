@@ -42,6 +42,13 @@ sub new {
 sub add_mistake {
     my ($self, $mistake) = @_;
 
+    if ($mistake->{'label'} eq 'WORD_REPEAT_RULE'
+        && $mistake->{'original_line'}
+            =~ m{\\(chapter|section|subsection|subsubsection)\{.*\}}) {
+
+        $mistake->{'unwanted'} = 1;
+    }
+
     if (is_number($mistake->{'line_number'})
         && exists $self->{'unwanted_lines'}->{$mistake->{'line_number'}}) {
         $mistake->{'unwanted'} = 1;
