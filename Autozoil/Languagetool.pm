@@ -15,6 +15,10 @@ LACZNIK_MYSLNIK
 DOUBLE_PUNCTUATION
 END_OF_UNWANTED_ERRORS
 
+my %unwanted_skrotowce_bez_dywizu = map { $_ => 1 } split/\n/,<<'END_OF_UNWANTED_SKROTOWCE_BEZ_DYWIZU';
+PDFB-ox
+END_OF_UNWANTED_SKROTOWCE_BEZ_DYWIZU
+
 sub new {
     my ($class, $sink, $language) = @_;
 
@@ -96,7 +100,10 @@ sub process_error {
         $error->{'ruleId'} eq 'SKROTY_Z_KROPKA' && $error->{'msg'} =~ /'pl\.'/
         ||
         $error->{'ruleId'} eq 'BRAK_SPACJI' && $error->{'msg'} =~ /': '/
-            && $error->{'context'} =~ m{http://};
+            && $error->{'context'} =~ m{http://}
+        ||
+        $error->{'ruleId'} eq 'SKROTOWCE_BEZ_DYWIZU'
+            && exists $unwanted_skrotowce_bez_dywizu{$error->{'replacements'}};
 
     my $sink = $self->{'sink'};
 
