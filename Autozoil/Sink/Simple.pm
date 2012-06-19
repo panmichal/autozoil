@@ -24,6 +24,9 @@ sub add_mistake {
                $mistake->{'comment'}),"\n\n";
 }
 
+sub finish {
+}
+
 sub clean_filename {
     my ($filename) = @_;
 

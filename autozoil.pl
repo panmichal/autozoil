@@ -19,14 +19,17 @@ use Autozoil::Sink::Simple;
 use Autozoil::Sink::Chain;
 use Autozoil::Sink::Store;
 use Autozoil::Sink::LineAdder;
+use Autozoil::Sink::XML;
 
 use Getopt::Long;
 
 my $locale;
+my $format;
 
 GetOptions(
     'locale:s' => \$locale,
-    'help' => \&help
+    'help' => \&help,
+    'format:s' => \$format
 ) or die "wrong argument, type -h for help\n";
 
 my $filename = $ARGV[0];
@@ -35,7 +38,20 @@ if (!defined($locale)) {
     $locale = 'pl_PL';
 }
 
-my $simple_sink = Autozoil::Sink::Simple->new();
+if (!defined($format)) {
+    $format = 'txt';
+}
+
+my $output_sink;
+
+if ($format eq 'txt') {
+    $output_sink = Autozoil::Sink::Simple->new();
+} elsif ($format eq 'xml') {
+    $output_sink = Autozoil::Sink::XML->new();
+} else {
+    die "unknown format `$format`";
+}
+
 my $store_sink = Autozoil::Sink::Store->new();
 my $chain_sink = Autozoil::Sink::Chain->new();
 my $line_adder = Autozoil::Sink::LineAdder->new($filename);
@@ -44,7 +60,7 @@ my $suppressor = Autozoil::Suppressor->new($filename);
 $chain_sink->add_sink($line_adder);
 $chain_sink->add_sink($auto_suppressor);
 $chain_sink->add_sink($suppressor);
-$chain_sink->add_sink($simple_sink);
+$chain_sink->add_sink($output_sink);
 $chain_sink->add_sink($store_sink);
 
 my $spell_dictionaries = $locale;
@@ -73,7 +89,7 @@ my @checkers =
      Autozoil::Typo->new($chain_sink, $lang),
      Autozoil::LogAnalyser->new($chain_sink));
 
-print "STARTING AUTOZOIL\n";
+print STDERR "STARTING AUTOZOIL\n";
 
 for my $checker (@checkers) {
     $checker->process($filename);
@@ -81,16 +97,17 @@ for my $checker (@checkers) {
 
 my $post_chain_sink = Autozoil::Sink::Chain->new();
 $post_chain_sink->add_sink($line_adder);
-$post_chain_sink->add_sink($simple_sink);
+$post_chain_sink->add_sink($output_sink);
 $post_chain_sink->add_sink($store_sink);
 $suppressor->postcheck($post_chain_sink);
 
+$output_sink->finish();
 
 if ($store_sink->is_ok()) {
-    print "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";
+    print STDERR "AUTOZOIL FOUND NO PROBLEMS, CONGRATS!\n";
     exit 0;
 } else {
-    print "AUTOZOIL FOUND ". $store_sink->get_number_of_problems()  ." PROBLEMS\n";
+    print STDERR "AUTOZOIL FOUND ". $store_sink->get_number_of_problems()  ." PROBLEMS\n";
     exit 1;
 }
 
@@ -111,6 +128,7 @@ Options:
 
     --help               prints this text
     --locale pl_PL|en_GB chooses locale
+    --format txt|xml     error information format
 END_OF_HELP
     exit 2
 }
