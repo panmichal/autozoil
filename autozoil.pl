@@ -99,6 +99,18 @@ sub prepare_iso_dic {
 }
 
 sub help {
-    print STDERR "USAGE: perl autozoil.pl filename.tex --locale pl_PL\n";
-    exit 1
+    print STDERR <<'END_OF_HELP';
+Autozoil is a comprehensive checker for texts written in (La)Tex,
+mainly MSc theses and scientific papers.
+
+Running:
+
+    autozoil file.tex --locale pl_PL
+
+Options:
+
+    --help               prints this text
+    --locale pl_PL|en_GB chooses locale
+END_OF_HELP
+    exit 2
 }
