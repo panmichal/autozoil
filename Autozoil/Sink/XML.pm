@@ -38,7 +38,6 @@ sub add_mistake {
         'error',
         'id' => $mistake->{'type'}.'-'.$mistake->{'label'},
         'type' => $mistake->{'type'},
-        'severity' => $mistake->{'type'},
         'correction' => $mistake->{'comment'},
         'msg' => $mistake->{'frag'});
 
