@@ -4,9 +4,15 @@ use strict;
 use XML::Writer;
 
 sub new {
-    my ($class) = @_;
+    my ($class, $args) = @_;
 
-    my $self = { } ;
+    my $source_file_prefix = '';
+
+    if (exists $args->{'source_file_prefix'}) {
+        $source_file_prefix = $args->{'source_file_prefix'};
+    }
+
+    my $self = { 'source_file_prefix' => $source_file_prefix } ;
 
     my $writer = XML::Writer->new('DATA_INDENT' => ' ' x 4, 'DATA_MODE' => 1, 'ENCODING' => 'utf-8');
 
@@ -37,7 +43,7 @@ sub add_mistake {
 
     $writer->emptyTag(
         'location',
-        'file' => clean_filename($mistake->{'filename'}),
+        'file' => $self->clean_filename($mistake->{'filename'}),
         'line' => $mistake->{'line_number'});
 
     $writer->endTag();
@@ -54,11 +60,13 @@ sub finish {
 }
 
 sub clean_filename {
-    my ($filename) = @_;
+    my ($self, $filename) = @_;
+
+    my $source_file_prefix = $self->{'source_file_prefix'} || '';
 
     $filename =~ s{^(.*)/}{};
 
-    return $filename;
+    return $source_file_prefix . $filename;
 }
 
 1;

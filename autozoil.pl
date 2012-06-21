@@ -25,11 +25,13 @@ use Getopt::Long;
 
 my $locale;
 my $format;
+my $source_file_prefix = '';
 
 GetOptions(
     'locale:s' => \$locale,
     'help' => \&help,
-    'format:s' => \$format
+    'format:s' => \$format,
+    'source-file-prefix:s' => \$source_file_prefix
 ) or die "wrong argument, type -h for help\n";
 
 my $filename = $ARGV[0];
@@ -44,10 +46,12 @@ if (!defined($format)) {
 
 my $output_sink;
 
+my $sink_args = {'source_file_prefix' => $source_file_prefix};
+
 if ($format eq 'txt') {
-    $output_sink = Autozoil::Sink::Simple->new();
+    $output_sink = Autozoil::Sink::Simple->new($sink_args);
 } elsif ($format eq 'xml') {
-    $output_sink = Autozoil::Sink::XML->new();
+    $output_sink = Autozoil::Sink::XML->new($sink_args);
 } else {
     die "unknown format `$format`";
 }
@@ -129,6 +133,8 @@ Options:
     --help               prints this text
     --locale pl_PL|en_GB chooses locale
     --format txt|xml     error information format
+    --source-file-prefix prefix added to source filenames
+                         when reported
 END_OF_HELP
     exit 2
 }
