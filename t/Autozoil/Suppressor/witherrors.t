@@ -55,7 +55,7 @@ cmp_deeply(
          'beg' => ignore(),
          'end' => ignore(),
          'label' => 'błond',
-         'comment' => ignore(),
+         'correction' => ignore(),
          'frag' => ignore(),
          'filename' => ignore(),
          'original_line' => ignore()
@@ -93,5 +93,3 @@ cmp_deeply(
          'original_line' => ignore()
      },
     ]);
-
-

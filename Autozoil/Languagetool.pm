@@ -114,7 +114,8 @@ sub process_error {
         'frag' => $error->{'context'},
         'beg' => $error->{'fromx'},
         'end' => $error->{'tox'},
-        'comment' => $error->{'ruleId'} .': '. $error->{'msg'} . ' ['. $error->{'replacements'} .']',
+        'comment' => $error->{'msg'},
+        'correction' => $error->{'replacements'} ,
         'type' => 'grammar',
         'label' => $error->{'ruleId'},
     });

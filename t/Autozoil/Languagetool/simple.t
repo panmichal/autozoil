@@ -28,6 +28,7 @@ cmp_deeply(
          'comment' => ignore(),
          'frag' => re('odnośnie'),
          'label' => 'ODNOSNIE_DO',
+         'correction' => ignore(),
      },
      {
          'type' => 'grammar',
@@ -37,7 +38,6 @@ cmp_deeply(
          'comment' => ignore(),
          'frag' => re('pytanie które'),
          'label' => 'BRAK_PRZECINKA_KTORY',
-          
+         'correction' => ignore()
      }
     ]);
-

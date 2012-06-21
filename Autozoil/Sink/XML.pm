@@ -38,8 +38,9 @@ sub add_mistake {
         'error',
         'id' => $mistake->{'type'}.'-'.$mistake->{'label'},
         'type' => $mistake->{'type'},
-        'correction' => $mistake->{'comment'},
-        'msg' => $mistake->{'frag'});
+        'correction' => $mistake->{'correction'},
+        'context' => $mistake->{'frag'},
+        'msg' => $mistake->{'comment'});
 
     $writer->emptyTag(
         'location',

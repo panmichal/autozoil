@@ -22,7 +22,7 @@ cmp_deeply(
     [
      {
          'type' => 'spell',
-         'comment' => ignore(),
+         'correction' => ignore(),
          'line_number' => 6,
          'label' => 'drukarkęlaserową',
          'beg' => ignore(),
@@ -30,4 +30,3 @@ cmp_deeply(
          'frag' => 'drukarkęlaserową',
      },
    ]);
-

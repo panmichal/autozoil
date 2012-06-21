@@ -61,7 +61,7 @@ sub process_spell_mistake_line {
                 'frag' => $word,
                 'beg' => $col,
                 'end' => $col + length($word),
-                'comment' => $comment,
+                'correction' => $comment,
                 'type' => 'spell',
                 'label' => $word,
             });

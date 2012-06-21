@@ -27,7 +27,7 @@ cmp_deeply(
          'end' => ignore(),
          'comment' => ignore(),
          'frag' => re('odnośnie'),
-         'label' => 'ODNOSNIE_DO'
+         'label' => 'ODNOSNIE_DO',
+         'correction' => ignore(),
      }
     ]);
-

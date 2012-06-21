@@ -28,5 +28,6 @@ cmp_deeply(
          'comment' => ignore(),
          'frag' => re('SVNa'),
          'label' => 'SKROTOWCE_BEZ_DYWIZU',
+         'correction' => ignore()
      },
     ]);
