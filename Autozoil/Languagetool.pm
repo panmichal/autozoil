@@ -27,10 +27,25 @@ sub new {
 
     my $self = {
         'sink' => $sink,
-        'language' => $language
+        'language' => $language,
+        'extra_command' => '',
     };
 
+    # detex leaves arguments of initial commands under Ubuntu
+    my $good_detex = is_detex_good();
+
+    if (!$good_detex) {
+        $self->{'extra_command'} = q{| perl -ne 'if (/\\\\begin\\{document\\}/..1) { print; } else {print "\n";}'};
+        print $self->{'extra_command'},"\n";
+    }
+
     return bless $self, $class;
+}
+
+sub is_detex_good {
+    my $result = qx{echo '\\usepackage[utf8]{inputenc}' | detex -l};
+
+    return $result !~ /\S/;
 }
 
 sub process {
@@ -46,9 +61,12 @@ sub process {
     chomp $out_tmp_file;
     my $two_backslashes_quoted = q{\\\\\\\\};
     my $two_spaces = q{  };
+
+    my $extra_command = $self->{'extra_command'};
+
     # detex zamienia \\ na znak końca wiersza, co psuje zgodność
     # numeracji wierszy, musimy to naprawić
-    `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g; s{ -- }{ -  }g;' < "$filename" | detex -l - > "$tmp_file"`;
+    `perl -pne 's{$two_backslashes_quoted}{$two_spaces}g; s{ -- }{ -  }g;' < "$filename" $extra_command | detex -l - > "$tmp_file"`;
     $self->check_if_document_class_in_oneline($filename);
 
     # languagetool output has to processed because of some bug in
