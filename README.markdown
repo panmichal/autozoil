@@ -92,3 +92,37 @@ specyfikacja to:
 Uwaga: jeśli zostanie napotkane uciszenie, dla którego błąd wcale nie
 wystąpił (zbędne uciszenie), jest to zgłaszane jako błąd! W przypadku
 specyfikacji z `*` muszą wystąpić przynajmniej 3 błędy.
+
+Typowe problemy
+---------------
+
+### Angielskie słowa w polskim tekście
+
+Autozoil pomija - przy sprawdzaniu poprawności ortograficznej - słowa
+objęte instrukcją `\english{...}` i `\eng{...}`.
+
+(W klasie uam-wmi-msc słowa objęte instrukcją `\english{...}` są
+składane kursywą, co jest tradycyjnym sposobem oddawania
+obcojęzycznych wstawek, instrukcja `\eng{foo}` rozwija się natomiast
+do "(ang.~\english{foo})").
+
+W stosunku do nazw własnych i akronimów nie należy stosować instrukcji
+\english (nie powinny być składane kursywą!). Takie słowa (lub człony
+wielowyrazowych nazw) należy dodać do słownika wyjątków lub
+"wytłumić", jak opisano wyżej, jeśli ich użycie jest okazjonalne.
+
+Z kolei rozwinięcia akronimów mogą być objęte instrukcją `\english`, np.:
+
+    XML (\english{eXtensible Markup Language}) to format...
+
+### Numery wersji
+
+Autozoil traktuje zapisy typu "4.5" jako błąd (w polskich typografii
+używamy przecinka jako separatora części dziesiętnej). W przypadku
+numeru wersji to oczywiście fałszywy alarm. Autozoil nie wygeneruje
+fałszywego alarmu, jeśli takich zapisom towarzyszy słowo "wersja" lub
+podobne. Należy jednak pamiętać o użyciu twardej spacji, zamiast
+"wersji 4.5" należy więc zapisać "wersji~4.5".
+
+Inne przypadki fałszywych alarmów związanych z wersjami należy ręcznie
+wytłumić.
