@@ -96,6 +96,15 @@ specyfikacji z `*` muszą wystąpić przynajmniej 3 błędy.
 Typowe problemy
 ---------------
 
+Niektóre z typowych problemów (np. twarda spacja po krótkim wyrazie)
+jest w stanie naprawić pomocniczy skrypt `autofix.rb`:
+
+     ruby autofix.rb plik.tex
+
+(Wymagana instalacja interpretera języka Ruby). Niestety skrypt
+`autofix.rb` nie jest doskonały i należy sprawdzić wyniki jego
+działania.
+
 ### Angielskie słowa w polskim tekście
 
 Autozoil pomija - przy sprawdzaniu poprawności ortograficznej - słowa
